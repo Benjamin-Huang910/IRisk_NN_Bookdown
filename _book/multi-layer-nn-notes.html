@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 4 Multi-Layer NN Notes | Neural Nets from Scratch</title>
+  <meta name="description" content="iRisk Labs SP-2024 Project" />
+  <meta name="generator" content="bookdown 0.38 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 4 Multi-Layer NN Notes | Neural Nets from Scratch" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="iRisk Labs SP-2024 Project" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 4 Multi-Layer NN Notes | Neural Nets from Scratch" />
+  
+  <meta name="twitter:description" content="iRisk Labs SP-2024 Project" />
+  
+
+<meta name="author" content="Daniel Polites" />
+
+
+<meta name="date" content="2024-04-03" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="digit-model.html"/>
+<link rel="next" href="multi-layer-nn-model.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Neural Nets from Scratch</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Intro</a>
+<ul>
+<li class="chapter" data-level="1.0.1" data-path="index.html"><a href="index.html#setup"><i class="fa fa-check"></i><b>1.0.1</b> Setup</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="single-layer-nn-notes.html"><a href="single-layer-nn-notes.html"><i class="fa fa-check"></i><b>2</b> Single-Layer NN Notes</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="single-layer-nn-notes.html"><a href="single-layer-nn-notes.html#model-form"><i class="fa fa-check"></i><b>2.1</b> Model Form</a></li>
+<li class="chapter" data-level="2.2" data-path="single-layer-nn-notes.html"><a href="single-layer-nn-notes.html#activation-functions"><i class="fa fa-check"></i><b>2.2</b> Activation Functions</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="single-layer-nn-notes.html"><a href="single-layer-nn-notes.html#sigmoid"><i class="fa fa-check"></i><b>2.2.1</b> Sigmoid:</a></li>
+<li class="chapter" data-level="2.2.2" data-path="single-layer-nn-notes.html"><a href="single-layer-nn-notes.html#relu"><i class="fa fa-check"></i><b>2.2.2</b> ReLU:</a></li>
+<li class="chapter" data-level="2.2.3" data-path="single-layer-nn-notes.html"><a href="single-layer-nn-notes.html#softmax"><i class="fa fa-check"></i><b>2.2.3</b> softmax:</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="single-layer-nn-notes.html"><a href="single-layer-nn-notes.html#loss-functions"><i class="fa fa-check"></i><b>2.3</b> Loss Functions</a></li>
+<li class="chapter" data-level="2.4" data-path="single-layer-nn-notes.html"><a href="single-layer-nn-notes.html#parameterization"><i class="fa fa-check"></i><b>2.4</b> Parameterization</a></li>
+<li class="chapter" data-level="2.5" data-path="single-layer-nn-notes.html"><a href="single-layer-nn-notes.html#network-fitting"><i class="fa fa-check"></i><b>2.5</b> Network Fitting</a></li>
+<li class="chapter" data-level="2.6" data-path="single-layer-nn-notes.html"><a href="single-layer-nn-notes.html#gradient-descent"><i class="fa fa-check"></i><b>2.6</b> Gradient Descent</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="single-layer-nn-notes.html"><a href="single-layer-nn-notes.html#beta-intercept"><i class="fa fa-check"></i><b>2.6.1</b> Beta: Intercept</a></li>
+<li class="chapter" data-level="2.6.2" data-path="single-layer-nn-notes.html"><a href="single-layer-nn-notes.html#beta-coefficients"><i class="fa fa-check"></i><b>2.6.2</b> Beta: Coefficients</a></li>
+<li class="chapter" data-level="2.6.3" data-path="single-layer-nn-notes.html"><a href="single-layer-nn-notes.html#w-intercepts"><i class="fa fa-check"></i><b>2.6.3</b> W: Intercepts</a></li>
+<li class="chapter" data-level="2.6.4" data-path="single-layer-nn-notes.html"><a href="single-layer-nn-notes.html#w-coefficients"><i class="fa fa-check"></i><b>2.6.4</b> W: Coefficients</a></li>
+<li class="chapter" data-level="2.6.5" data-path="single-layer-nn-notes.html"><a href="single-layer-nn-notes.html#combining"><i class="fa fa-check"></i><b>2.6.5</b> Combining</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="single-layer-nn-notes.html"><a href="single-layer-nn-notes.html#code-example"><i class="fa fa-check"></i><b>2.7</b> Code Example</a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="single-layer-nn-notes.html"><a href="single-layer-nn-notes.html#generate-data"><i class="fa fa-check"></i><b>2.7.1</b> Generate Data</a></li>
+<li class="chapter" data-level="2.7.2" data-path="single-layer-nn-notes.html"><a href="single-layer-nn-notes.html#parameter-setup"><i class="fa fa-check"></i><b>2.7.2</b> Parameter Setup</a></li>
+<li class="chapter" data-level="2.7.3" data-path="single-layer-nn-notes.html"><a href="single-layer-nn-notes.html#output"><i class="fa fa-check"></i><b>2.7.3</b> Output</a></li>
+<li class="chapter" data-level="2.7.4" data-path="single-layer-nn-notes.html"><a href="single-layer-nn-notes.html#gradient-descent-1"><i class="fa fa-check"></i><b>2.7.4</b> Gradient Descent</a></li>
+<li class="chapter" data-level="2.7.5" data-path="single-layer-nn-notes.html"><a href="single-layer-nn-notes.html#iterate"><i class="fa fa-check"></i><b>2.7.5</b> Iterate</a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="single-layer-nn-notes.html"><a href="single-layer-nn-notes.html#vectorized-calculations"><i class="fa fa-check"></i><b>2.8</b> Vectorized Calculations</a>
+<ul>
+<li class="chapter" data-level="2.8.1" data-path="single-layer-nn-notes.html"><a href="single-layer-nn-notes.html#notation-setup"><i class="fa fa-check"></i><b>2.8.1</b> Notation Setup</a></li>
+<li class="chapter" data-level="2.8.2" data-path="single-layer-nn-notes.html"><a href="single-layer-nn-notes.html#gradients"><i class="fa fa-check"></i><b>2.8.2</b> gradients</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="digit-model.html"><a href="digit-model.html"><i class="fa fa-check"></i><b>3</b> Digit Model</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="digit-model.html"><a href="digit-model.html#binomial-model"><i class="fa fa-check"></i><b>3.1</b> Binomial Model</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="digit-model.html"><a href="digit-model.html#setup-1"><i class="fa fa-check"></i><b>3.1.1</b> Setup</a></li>
+<li class="chapter" data-level="3.1.2" data-path="digit-model.html"><a href="digit-model.html#model"><i class="fa fa-check"></i><b>3.1.2</b> Model</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="digit-model.html"><a href="digit-model.html#multinomial-model"><i class="fa fa-check"></i><b>3.2</b> Multinomial Model</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="digit-model.html"><a href="digit-model.html#setup-2"><i class="fa fa-check"></i><b>3.2.1</b> Setup</a></li>
+<li class="chapter" data-level="3.2.2" data-path="digit-model.html"><a href="digit-model.html#model-1"><i class="fa fa-check"></i><b>3.2.2</b> Model</a></li>
+<li class="chapter" data-level="3.2.3" data-path="digit-model.html"><a href="digit-model.html#model-heatmaps"><i class="fa fa-check"></i><b>3.2.3</b> model heatmaps</a></li>
+<li class="chapter" data-level="3.2.4" data-path="digit-model.html"><a href="digit-model.html#no-outside-cells-model"><i class="fa fa-check"></i><b>3.2.4</b> no outside cells model</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="multi-layer-nn-notes.html"><a href="multi-layer-nn-notes.html"><i class="fa fa-check"></i><b>4</b> Multi-Layer NN Notes</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="multi-layer-nn-notes.html"><a href="multi-layer-nn-notes.html#notation-setup-1"><i class="fa fa-check"></i><b>4.1</b> Notation Setup</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="multi-layer-nn-notes.html"><a href="multi-layer-nn-notes.html#scalars"><i class="fa fa-check"></i><b>4.1.1</b> Scalars</a></li>
+<li class="chapter" data-level="4.1.2" data-path="multi-layer-nn-notes.html"><a href="multi-layer-nn-notes.html#x"><i class="fa fa-check"></i><b>4.1.2</b> X</a></li>
+<li class="chapter" data-level="4.1.3" data-path="multi-layer-nn-notes.html"><a href="multi-layer-nn-notes.html#w-1"><i class="fa fa-check"></i><b>4.1.3</b> W</a></li>
+<li class="chapter" data-level="4.1.4" data-path="multi-layer-nn-notes.html"><a href="multi-layer-nn-notes.html#b-1"><i class="fa fa-check"></i><b>4.1.4</b> b</a></li>
+<li class="chapter" data-level="4.1.5" data-path="multi-layer-nn-notes.html"><a href="multi-layer-nn-notes.html#y"><i class="fa fa-check"></i><b>4.1.5</b> Y</a></li>
+<li class="chapter" data-level="4.1.6" data-path="multi-layer-nn-notes.html"><a href="multi-layer-nn-notes.html#z"><i class="fa fa-check"></i><b>4.1.6</b> z</a></li>
+<li class="chapter" data-level="4.1.7" data-path="multi-layer-nn-notes.html"><a href="multi-layer-nn-notes.html#a"><i class="fa fa-check"></i><b>4.1.7</b> a</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="multi-layer-nn-notes.html"><a href="multi-layer-nn-notes.html#forward-propagation"><i class="fa fa-check"></i><b>4.2</b> Forward Propagation</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="multi-layer-nn-notes.html"><a href="multi-layer-nn-notes.html#setup-3"><i class="fa fa-check"></i><b>4.2.1</b> Setup</a></li>
+<li class="chapter" data-level="4.2.2" data-path="multi-layer-nn-notes.html"><a href="multi-layer-nn-notes.html#algorithm"><i class="fa fa-check"></i><b>4.2.2</b> Algorithm</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="multi-layer-nn-notes.html"><a href="multi-layer-nn-notes.html#backward-propagation"><i class="fa fa-check"></i><b>4.3</b> Backward Propagation</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="multi-layer-nn-notes.html"><a href="multi-layer-nn-notes.html#delta"><i class="fa fa-check"></i><b>4.3.1</b> Delta</a></li>
+<li class="chapter" data-level="4.3.2" data-path="multi-layer-nn-notes.html"><a href="multi-layer-nn-notes.html#gradients-1"><i class="fa fa-check"></i><b>4.3.2</b> Gradients</a></li>
+<li class="chapter" data-level="4.3.3" data-path="multi-layer-nn-notes.html"><a href="multi-layer-nn-notes.html#algorithm-1"><i class="fa fa-check"></i><b>4.3.3</b> Algorithm</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="multi-layer-nn-model.html"><a href="multi-layer-nn-model.html"><i class="fa fa-check"></i><b>5</b> Multi-Layer NN Model</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="multi-layer-nn-model.html"><a href="multi-layer-nn-model.html#generate-data-1"><i class="fa fa-check"></i><b>5.1</b> Generate Data</a></li>
+<li class="chapter" data-level="5.2" data-path="multi-layer-nn-model.html"><a href="multi-layer-nn-model.html#functions"><i class="fa fa-check"></i><b>5.2</b> Functions</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="multi-layer-nn-model.html"><a href="multi-layer-nn-model.html#link-functions"><i class="fa fa-check"></i><b>5.2.1</b> Link Functions</a></li>
+<li class="chapter" data-level="5.2.2" data-path="multi-layer-nn-model.html"><a href="multi-layer-nn-model.html#loss-functions-1"><i class="fa fa-check"></i><b>5.2.2</b> Loss Functions</a></li>
+<li class="chapter" data-level="5.2.3" data-path="multi-layer-nn-model.html"><a href="multi-layer-nn-model.html#misc-helpers"><i class="fa fa-check"></i><b>5.2.3</b> Misc Helpers</a></li>
+<li class="chapter" data-level="5.2.4" data-path="multi-layer-nn-model.html"><a href="multi-layer-nn-model.html#forward-propagation-1"><i class="fa fa-check"></i><b>5.2.4</b> Forward Propagation</a></li>
+<li class="chapter" data-level="5.2.5" data-path="multi-layer-nn-model.html"><a href="multi-layer-nn-model.html#gradient-descent-iteration"><i class="fa fa-check"></i><b>5.2.5</b> Gradient Descent Iteration</a></li>
+<li class="chapter" data-level="5.2.6" data-path="multi-layer-nn-model.html"><a href="multi-layer-nn-model.html#perform-gradient-descent"><i class="fa fa-check"></i><b>5.2.6</b> Perform Gradient Descent</a></li>
+<li class="chapter" data-level="5.2.7" data-path="multi-layer-nn-model.html"><a href="multi-layer-nn-model.html#summary-functions"><i class="fa fa-check"></i><b>5.2.7</b> Summary Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="multi-layer-nn-model.html"><a href="multi-layer-nn-model.html#test-1"><i class="fa fa-check"></i><b>5.3</b> Test</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="multi-layer-nn-model.html"><a href="multi-layer-nn-model.html#other"><i class="fa fa-check"></i><b>5.3.1</b> Other</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="multi-layer-nn-model.html"><a href="multi-layer-nn-model.html#next-steps"><i class="fa fa-check"></i><b>5.4</b> Next Steps</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Neural Nets from Scratch</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="multi-layer-nn-notes" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">Chapter 4</span> Multi-Layer NN Notes<a href="multi-layer-nn-notes.html#multi-layer-nn-notes" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Similar to the chapter on single-layer NNs, this chapter outlays notation &amp; methodology for a multiple-layer neural network.</p>
+<hr />
+<p>source: <a href="https://arxiv.org/abs/1801.05894" class="uri">https://arxiv.org/abs/1801.05894</a></p>
+<p>“Deep Learning: An Introduction for Applied Mathematicians” by Catherine F. Higham and Desmond J. Higham, published in 2018</p>
+<hr />
+<div id="notation-setup-1" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Notation Setup<a href="multi-layer-nn-notes.html#notation-setup-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="scalars" class="section level3 hasAnchor" number="4.1.1">
+<h3><span class="header-section-number">4.1.1</span> Scalars<a href="multi-layer-nn-notes.html#scalars" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Layers: 1-<span class="math inline">\(L\)</span>, indexed by <span class="math inline">\(l\)</span></p>
+<p>Number of Neurons in layer <span class="math inline">\(l\)</span>: <span class="math inline">\(n_l\)</span></p>
+<p>Neuron Activations: <span class="math inline">\(a^{(\text{layer num})}_{\text{neuron num}} = a^{(l)}_j\)</span>. Vector of activations for a layer is <span class="math inline">\(a^{(l)}\)</span></p>
+<p>Activation Function: <span class="math inline">\(g(\cdot)\)</span> is our generic activation function</p>
+<hr />
+</div>
+<div id="x" class="section level3 hasAnchor" number="4.1.2">
+<h3><span class="header-section-number">4.1.2</span> X<a href="multi-layer-nn-notes.html#x" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We have our input matrix <span class="math inline">\(X \in \mathbb{R}^{\text{vars} \times \text{obs}} = \mathbb{R}^{n_0 \times m}\)</span>:</p>
+<p><span class="math display">\[
+X = \ ^{n_0 \text{ inputs}}
+\overbrace{
+  \begin{cases}
+    \begin{bmatrix}
+    x_{1, 1} &amp; x_{1, 2} &amp; \cdots &amp; x_{1, m} \\
+    x_{2, 1} &amp; x_{2, 2} &amp; \cdots &amp; x_{2, m} \\
+    \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+    x_{n_0, 1} &amp; x_{n_0, 2} &amp; \cdots &amp; x_{n_0, m} \\
+    \end{bmatrix}
+  \end{cases}
+}^{m \text{ obs}}
+\]</span></p>
+<p>The <span class="math inline">\(i\)</span>th observation of <span class="math inline">\(X\)</span> is the <span class="math inline">\(i\)</span>th column of <span class="math inline">\(X\)</span>, referenced as <span class="math inline">\(x_i\)</span>.</p>
+<hr />
+</div>
+<div id="w-1" class="section level3 hasAnchor" number="4.1.3">
+<h3><span class="header-section-number">4.1.3</span> W<a href="multi-layer-nn-notes.html#w-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>our Weight matrices <span class="math inline">\(W^{(l)} \in \mathbb{R}^{\text{out} \times \text{in}} = \mathbb{R}^{n_l \times n_{l - 1}}\)</span>:</p>
+<p><span class="math display">\[
+W^{(l)} = \ ^{n_l\text{ outputs}}
+\overbrace{
+  \begin{cases}
+    \begin{bmatrix}
+    w^{(l)}_{1, 1} &amp; w^{(l)}_{1, 2} &amp; \cdots &amp; w^{(l)}_{1, n_{l-1}} \\
+    w^{(l)}_{2, 1} &amp; w^{(l)}_{2, 2} &amp; \cdots &amp; w^{(l)}_{2, n_{l-1}} \\
+    \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+    w^{(l)}_{n_l, 1} &amp; w^{(l)}_{n_l, 2} &amp; \cdots &amp; w^{(l)}_{n_l, n_{l-1}}
+    \end{bmatrix}
+  \end{cases}
+}^{n_{l - 1} \text{ inputs}}
+\]</span></p>
+<p><span class="math inline">\(W^{(l)}\)</span> is the weight matrix for the <span class="math inline">\(l\)</span>th layer</p>
+<hr />
+</div>
+<div id="b-1" class="section level3 hasAnchor" number="4.1.4">
+<h3><span class="header-section-number">4.1.4</span> b<a href="multi-layer-nn-notes.html#b-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>our Bias matrices <span class="math inline">\(b^{(l)} \in \mathbb{R}^{\text{out} \times 1} = \mathbb{R}^{n_l \times 1}\)</span>:</p>
+<p><span class="math display">\[
+b^{(l)} = \ ^{n_l\text{ outputs}}
+  \begin{cases}
+    \begin{bmatrix}
+    b^{(l)}_{1} \\
+    b^{(l)}_{2} \\
+    \vdots \\
+    b^{(l)}_{n_l}
+    \end{bmatrix}
+  \end{cases}
+\]</span></p>
+<p><span class="math inline">\(b^{(l)}\)</span> is the bias matrix for the <span class="math inline">\(l\)</span>th layer</p>
+<hr />
+</div>
+<div id="y" class="section level3 hasAnchor" number="4.1.5">
+<h3><span class="header-section-number">4.1.5</span> Y<a href="multi-layer-nn-notes.html#y" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>our target layer matrix <span class="math inline">\(Y \in \mathbb{R}^{\text{cats} \times \text{obs}} = \mathbb{R}^{n_L \times m}\)</span>:</p>
+<p><span class="math display">\[
+Y = \ ^{n_L \text{ categories}}
+\overbrace{
+  \begin{cases}
+    \begin{bmatrix}
+    y_{1, 1} &amp; y_{1, 2} &amp; \cdots &amp; y_{1, m} \\
+    y_{2, 1} &amp; y_{2, 2} &amp; \cdots &amp; y_{2, m} \\
+    \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+    y_{n_L, 1} &amp; y_{n_L, 2} &amp; \cdots &amp; y_{n_L, m}
+    \end{bmatrix}
+  \end{cases}
+}^{m \text{ obs}}
+\]</span></p>
+<p>Similar to <span class="math inline">\(X\)</span>, the <span class="math inline">\(i\)</span>th observation of <span class="math inline">\(Y\)</span> is the <span class="math inline">\(i\)</span>th column of <span class="math inline">\(Y\)</span>, referenced as <span class="math inline">\(y_i\)</span>.</p>
+<hr />
+</div>
+<div id="z" class="section level3 hasAnchor" number="4.1.6">
+<h3><span class="header-section-number">4.1.6</span> z<a href="multi-layer-nn-notes.html#z" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>our neuron layer’s activation function input <span class="math inline">\(z^{(l)} \in \mathbb{R}^{\text{out} \times 1} = \mathbb{R}^{n_l \times 1}\)</span>:</p>
+<p><span class="math display">\[
+z^{(l)} = \ ^{n_l\text{ outputs}}
+  \begin{cases}
+    \begin{bmatrix}
+      z^{(l)}_{1} \\
+      z^{(l)}_{2} \\
+      \vdots \\
+      z^{(l)}_{n_l}
+    \end{bmatrix}
+  \end{cases}
+\]</span></p>
+<p><span class="math inline">\(z^{(l)}\)</span> is the neuron ‘weighted input’ matrix for the <span class="math inline">\(l\)</span>th layer</p>
+<p>We have that:</p>
+<p><span class="math display">\[
+\begin{aligned}
+z^{(l)} &amp;= W^{(l)} * a^{(l - 1)} + b^{(l)} \\ \\
+&amp;= \ ^{n_l\text{ outputs}}
+\overbrace{
+  \begin{cases}
+    \begin{bmatrix}
+    w^{(l)}_{1, 1} &amp; w^{(l)}_{1, 2} &amp; \cdots &amp; w^{(l)}_{1, n_{l-1}} \\
+    w^{(l)}_{2, 1} &amp; w^{(l)}_{2, 2} &amp; \cdots &amp; w^{(l)}_{2, n_{l-1}} \\
+    \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+    w^{(l)}_{n_l, 1} &amp; w^{(l)}_{n_l, 2} &amp; \cdots &amp; w^{(l)}_{n_l, n_{l-1}}
+    \end{bmatrix}
+  \end{cases}
+}^{n_{l - 1} \text{ inputs}} * \ ^{n_{l - 1} \text{ inputs}}
+  \begin{cases}
+    \begin{bmatrix}
+      a^{(l-1)}_{1} \\
+      a^{(l-1)}_{2} \\
+      \vdots \\
+      a^{(l-1)}_{n_l}
+    \end{bmatrix}
+  \end{cases} + \ ^{n_l\text{ outputs}}
+  \begin{cases}
+    \begin{bmatrix}
+    b^{(l)}_{1} \\
+    b^{(l)}_{2} \\
+    \vdots \\
+    b^{(l)}_{n_l}
+    \end{bmatrix}
+  \end{cases} \\ \\
+&amp;= \ ^{n_l\text{ outputs}}
+  \begin{cases}
+    \begin{bmatrix}
+      z^{(l)}_{1} \\
+      z^{(l)}_{2} \\
+      \vdots \\
+      z^{(l)}_{n_l}
+    \end{bmatrix}
+  \end{cases}
+\end{aligned}
+\]</span></p>
+<hr />
+</div>
+<div id="a" class="section level3 hasAnchor" number="4.1.7">
+<h3><span class="header-section-number">4.1.7</span> a<a href="multi-layer-nn-notes.html#a" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>our Neuron Activation <span class="math inline">\(a^{(l)} \in \mathbb{R}^{\text{out} \times 1} = \mathbb{R}^{n_l \times 1}\)</span>:</p>
+<p><span class="math display">\[
+a^{(l)} = \ ^{n_l\text{ outputs}}
+  \begin{cases}
+    \begin{bmatrix}
+      a^{(l)}_{1} \\
+      a^{(l)}_{2} \\
+      \vdots \\
+      a^{(l)}_{n_l}
+    \end{bmatrix}
+  \end{cases}
+\]</span></p>
+<p><span class="math inline">\(a^{(l)}\)</span> is the activation matrix for the <span class="math inline">\(l\)</span>th layer</p>
+<p>We have that:</p>
+<p><span class="math display">\[
+\begin{aligned}
+a^{(l)} &amp;= g\left(z^{(l)}\right) \\ \\
+&amp;= g\left(W^{(l)} * a^{(l - 1)} + b^{(l)}\right) \\ \\
+&amp;= g\left(\ ^{n_l\text{ outputs}}
+\overbrace{
+  \begin{cases}
+    \begin{bmatrix}
+    w^{(l)}_{1, 1} &amp; w^{(l)}_{1, 2} &amp; \cdots &amp; w^{(l)}_{1, n_{l-1}} \\
+    w^{(l)}_{2, 1} &amp; w^{(l)}_{2, 2} &amp; \cdots &amp; w^{(l)}_{2, n_{l-1}} \\
+    \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+    w^{(l)}_{n_l, 1} &amp; w^{(l)}_{n_l, 2} &amp; \cdots &amp; w^{(l)}_{n_l, n_{l-1}}
+    \end{bmatrix}
+  \end{cases}
+}^{n_{l - 1} \text{ inputs}} * \ ^{n_{l - 1} \text{ inputs}}
+  \begin{cases}
+    \begin{bmatrix}
+      a^{(l-1)}_{1} \\
+      a^{(l-1)}_{2} \\
+      \vdots \\
+      a^{(l-1)}_{n_l}
+    \end{bmatrix}
+  \end{cases} + \ ^{n_l\text{ outputs}}
+  \begin{cases}
+    \begin{bmatrix}
+    b^{(l)}_{1} \\
+    b^{(l)}_{2} \\
+    \vdots \\
+    b^{(l)}_{n_l}
+    \end{bmatrix}
+  \end{cases}\right) \\ \\
+&amp;= g\left(\ ^{n_l\text{ outputs}}
+  \begin{cases}
+    \begin{bmatrix}
+      z^{(l)}_{1} \\
+      z^{(l)}_{2} \\
+      \vdots \\
+      z^{(l)}_{n_l}
+    \end{bmatrix}
+  \end{cases}\right) \\ \\
+&amp;= \ ^{n_l\text{ outputs}}
+  \begin{cases}
+    \begin{bmatrix}
+      a^{(l)}_{1} \\
+      a^{(l)}_{2} \\
+      \vdots \\
+      a^{(l)}_{n_l}
+    \end{bmatrix}
+  \end{cases}
+\end{aligned}
+\]</span></p>
+</div>
+</div>
+<div id="forward-propagation" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> Forward Propagation<a href="multi-layer-nn-notes.html#forward-propagation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="setup-3" class="section level3 hasAnchor" number="4.2.1">
+<h3><span class="header-section-number">4.2.1</span> Setup<a href="multi-layer-nn-notes.html#setup-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>For a single neuron, it’s activation is going to be a weighted sum of all the activations of the previous layer, plus a constant, all fed into the activation function. Formally, this is:</p>
+<p><span class="math display">\[a^{(l)}_j = g\left(\sum_{i = 1}^{n_{l - 1}} w^{(l)}_{j, i} * a^{(l - 1)}_{i} + b^{(l)}_{j}\right)\]</span></p>
+<p>We can put this in matrix form. An entire layer of neurons can be represented by:</p>
+<p><span class="math display">\[a^{(l)} = g\left(z^{(l)}\right) = g\left(W^{(l)} * a^{(l - 1)} + b^{(l)}\right)\]</span></p>
+<p>as was shown above. We can repeatedly apply this formula to get from <span class="math inline">\(X\)</span> to out predicted <span class="math inline">\(\hat Y = a^{(L)}\)</span>. We start with the initial layer (layer 0) being set equal to <span class="math inline">\(x_i\)</span>.</p>
+<p>Note that we will be forward (&amp; backward) propagating one observation of <span class="math inline">\(X\)</span> at a time by operating on each column separately. However, if desired forward (&amp; backward) propagation can be done on all observations simultaneously. The notation change would involve stretching out <span class="math inline">\(a^{(l)}\)</span>, <span class="math inline">\(z^{(l)}\)</span>, and <span class="math inline">\(b^{(l)}\)</span> so that they are each <span class="math inline">\(m\)</span> wide:</p>
+<p><span class="math display">\[
+\begin{aligned}
+a^{(l)} &amp;= g\left(z^{(l)}\right) \\ \\
+&amp;= g\left(W^{(l)} * a^{(l - 1)} + b^{(l)}\right) \\ \\
+&amp;= g(\ ^{n_l\text{ outputs}}
+\overbrace{
+  \begin{cases}
+    \begin{bmatrix}
+    w^{(l)}_{1, 1} &amp; w^{(l)}_{1, 2} &amp; \cdots &amp; w^{(l)}_{1, n_{l-1}} \\
+    w^{(l)}_{2, 1} &amp; w^{(l)}_{2, 2} &amp; \cdots &amp; w^{(l)}_{2, n_{l-1}} \\
+    \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+    w^{(l)}_{n_l, 1} &amp; w^{(l)}_{n_l, 2} &amp; \cdots &amp; w^{(l)}_{n_l, n_{l-1}}
+    \end{bmatrix}
+  \end{cases}
+}^{n_{l - 1} \text{ inputs}} * \ ^{n_{l - 1} \text{ inputs}}
+\overbrace{
+  \begin{cases}
+    \begin{bmatrix}
+    a^{(l - 1)}_{1, 1} &amp; a^{(l - 1)}_{1, 2} &amp; \cdots &amp; a^{(l - 1)}_{1, m} \\
+    a^{(l - 1)}_{2, 1} &amp; a^{(l - 1)}_{2, 2} &amp; \cdots &amp; a^{(l - 1)}_{2, m} \\
+    \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+    a^{(l - 1)}_{n_{l - 1}, 1} &amp; a^{(l - 1)}_{n_{l - 1}, 2} &amp; \cdots &amp; a^{(l - 1)}_{n_{l - 1}, m} \\
+    \end{bmatrix}
+  \end{cases}
+}^{m \text{ obs}} \\
+&amp;+ \ ^{n_l \text{ outputs}}
+\overbrace{
+  \begin{cases}
+    \begin{bmatrix}
+    - &amp; b^{(l)}_{1} &amp; - \\
+    - &amp; b^{(l)}_{2} &amp; - \\
+    \vdots &amp; \vdots &amp; \vdots \\
+    - &amp; b^{(l)}_{n_l} &amp; -
+    \end{bmatrix}
+  \end{cases}
+}^{m \text{ obs}}) \\ \\
+&amp;= g\left(\ ^{n_l \text{ outputs}}
+\overbrace{
+  \begin{cases}
+    \begin{bmatrix}
+    z^{(l)}_{1, 1} &amp; z^{(l)}_{1, 2} &amp; \cdots &amp; z^{(l)}_{1, m} \\
+    z^{(l)}_{2, 1} &amp; z^{(l)}_{2, 2} &amp; \cdots &amp; z^{(l)}_{2, m} \\
+    \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+    z^{(l)}_{n_l, 1} &amp; z^{(l)}_{n_l, 2} &amp; \cdots &amp; z^{(l)}_{n_l, m} \\
+    \end{bmatrix}
+  \end{cases}
+}^{m \text{ obs}}\right) \\ \\
+&amp;= \ ^{n_l \text{ outputs}}
+\overbrace{
+  \begin{cases}
+    \begin{bmatrix}
+    a^{(l)}_{1, 1} &amp; a^{(l)}_{1, 2} &amp; \cdots &amp; a^{(l)}_{1, m} \\
+    a^{(l)}_{2, 1} &amp; a^{(l)}_{2, 2} &amp; \cdots &amp; a^{(l)}_{2, m} \\
+    \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+    a^{(l)}_{n_l, 1} &amp; a^{(l)}_{n_l, 2} &amp; \cdots &amp; a^{(l)}_{n_l, m} \\
+    \end{bmatrix}
+  \end{cases}
+}^{m \text{ obs}}
+\end{aligned}
+\]</span></p>
+<p>Each column of <span class="math inline">\(a^{(l)}\)</span> and <span class="math inline">\(z^{(l)}\)</span> represent an observation and can hold unique values, while <span class="math inline">\(b^{(l)}\)</span> is merely repeated to be <span class="math inline">\(m\)</span> wide; each row is the same bias value for each neuron.</p>
+<p>We are sticking with one observation at a time for it’s simplicity, and it makes the back-propagation linear algebra easier/cleaner.</p>
+</div>
+<div id="algorithm" class="section level3 hasAnchor" number="4.2.2">
+<h3><span class="header-section-number">4.2.2</span> Algorithm<a href="multi-layer-nn-notes.html#algorithm" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>For a given observation <span class="math inline">\(x_i\)</span>:</p>
+<ol style="list-style-type: decimal">
+<li>set <span class="math inline">\(a^{(0)} = x_i\)</span></li>
+<li>For each <span class="math inline">\(l\)</span> from 1 up to <span class="math inline">\(L\)</span>:
+<ul>
+<li><span class="math inline">\(z^{(l)} = W^{(l)} a^{(l - 1)} + b^{(l)}\)</span></li>
+<li><span class="math inline">\(a^{(l)} = g\left(z^{(l)}\right)\)</span></li>
+<li><span class="math inline">\(D^{(l)} = \text{diag} \left[g&#39;\left(z^{(l)}\right)\right]\)</span>
+<ul>
+<li>this term will be needed later</li>
+</ul></li>
+</ul></li>
+</ol>
+<p>if <span class="math inline">\(Y\)</span> happens to be categorical, we may choose to apply the softmax function (<span class="math inline">\(\frac{e^{z_i}}{\sum e^{z_j}}\)</span>) to <span class="math inline">\(a^{(L)}\)</span>. Otherwise, we are done! We have our estimated result <span class="math inline">\(a^{(L)}\)</span>.</p>
+</div>
+</div>
+<div id="backward-propagation" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> Backward Propagation<a href="multi-layer-nn-notes.html#backward-propagation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Recall that we are trying to minimize a cost function via gradient descent by iterating over our parameter vector <span class="math inline">\(\theta: \theta^{t + 1} \leftarrow \theta^t - \rho * \nabla\mathcal{C}(\theta)\)</span>. We will now implement this.</p>
+<p>To do so, there is one more useful variable we need to define: <span class="math inline">\(\delta^{(l)}\)</span></p>
+<div id="delta" class="section level3 hasAnchor" number="4.3.1">
+<h3><span class="header-section-number">4.3.1</span> Delta<a href="multi-layer-nn-notes.html#delta" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We define <span class="math inline">\(\delta^{(l)}_j := \frac{\partial \mathcal{C}}{\partial z^{(l)}_j}\)</span> for a particular neuron, and its vector form <span class="math inline">\(\delta^{(l)}\)</span> represents the whole layer.</p>
+<p><span class="math inline">\(\delta^{(l)}\)</span> allows us to back-propagate one layer at a time by defining the gradients of the earlier layers from those of the later layers. In particular:</p>
+<p><span class="math display">\[\delta^{(l)} = \text{diag} \left[g&#39;\left(z^{(l)}\right)\right] * \left(W^{(l + 1)}\right)^T * \delta^{(l + 1)}\]</span></p>
+<p>The derivation is in the linked paper, so I won’t go over it in full here</p>
+<hr />
+<p>In short, <span class="math inline">\(z^{(l + 1)} = W^{(l + 1)} * g\left(z^{(l)}\right) + b^{(l + 1)}\)</span>; so, <span class="math inline">\(\delta^{(l)}\)</span> is related to <span class="math inline">\(\delta^{(l + 1)}\)</span> via the chain rule:</p>
+<p><span class="math display">\[\delta^{(l)} = \frac{\partial \mathcal{C}}{\partial z^{(l)}} = \underbrace{\frac{\partial \mathcal{C}}{\partial z^{(l + 1)}}}_{\delta^{(l + 1)}} * \underbrace{\frac{\partial z^{(l + 1)}}{\partial g}}_{\left(W^{(l + 1)}\right)^T} * \underbrace{\frac{\partial g}{\partial z^{(l)}}}_{g&#39;\left(z^{(l)}\right)}\]</span></p>
+<p>[eventually, add in a write-up on why the transpose of <span class="math inline">\(W\)</span> is taken. In short, it takes the dot product each neuron’s output across the next layer’s neurons (<span class="math inline">\(\left(W^{(l + 1)}\right)^T\)</span>, each row is the input neuron being distributed across the next layer) with the next layer’s <span class="math inline">\(\delta^{(l + 1)}\)</span>]</p>
+<hr />
+<p>Note that we scale <span class="math inline">\(\delta^{(l)}\)</span> by <span class="math inline">\(g&#39;\left(z^{(l)}\right)\)</span>, which we do by multiplying on the left by:</p>
+<p><span class="math display">\[\text{diag} \left[g&#39;\left(z^{(l)}\right)\right] = \begin{bmatrix} g&#39;\left(z^{(l)}_1\right) &amp;  &amp;  &amp;  \\  &amp; g&#39;\left(z^{(l)}_2\right) &amp;  &amp;  \\  &amp;  &amp; \ddots &amp;  \\  &amp;  &amp;  &amp; g&#39;\left(z^{(l)}_{n_l}\right) \end{bmatrix}\]</span></p>
+<p>This has the same effect as element-wise multiplication.</p>
+<p>For shorthand, we define <span class="math inline">\(D^{(l)} = \text{diag} \left[g&#39;\left(z^{(l)}\right)\right]\)</span></p>
+</div>
+<div id="gradients-1" class="section level3 hasAnchor" number="4.3.2">
+<h3><span class="header-section-number">4.3.2</span> Gradients<a href="multi-layer-nn-notes.html#gradients-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Given <span class="math inline">\(\delta^{(l)}\)</span>, it becomes simple to write down our gradients:</p>
+<p><span class="math display">\[
+\begin{aligned}
+  \delta^{(L)} &amp;= D^{(L)} * \frac{\partial \mathcal{C}}{\partial a^{(L)}} &amp; \text{(a)} \\ \\
+  \delta^{(l)} &amp;= D^{(l)} * \left(W^{(l + 1)}\right)^T * \delta^{(l + 1)} &amp; \text{(b)} \\ \\
+  \frac{\partial \mathcal{C}}{\partial b^{(b)}} &amp;= \delta^{(l)} &amp; \text{(c)} \\ \\
+  \frac{\partial \mathcal{C}}{\partial W^{(l)}} &amp;= \delta^{(l)} * \left(a^{(l - 1)}\right)^T &amp; \text{(d)}
+\end{aligned}
+\]</span></p>
+<p>The proofs of these are in the linked paper. (could add in a bit with an intuitive explanation. eventually I want to get better vis of the chain rule tho beforehand, because I bet we could get something neat with neuron &amp; derivative visualizations)</p>
+<p>(we can also do this with expanded matrix view as above)</p>
+<p>For the squared-error loss function <span class="math inline">\(\mathcal{C}(\theta) = \frac{1}{2} (y - a^{(L)})^2\)</span>, we would have <span class="math inline">\(\frac{\partial \mathcal{C}}{\partial a^{(L)}} = (a^{(L)} - y)\)</span> [find out what this is for log-loss :) softmax too?]</p>
+</div>
+<div id="algorithm-1" class="section level3 hasAnchor" number="4.3.3">
+<h3><span class="header-section-number">4.3.3</span> Algorithm<a href="multi-layer-nn-notes.html#algorithm-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>For a given observation <span class="math inline">\(x_i\)</span>:</p>
+<ol style="list-style-type: decimal">
+<li>set <span class="math inline">\(\delta^{(L)} = D^{(l)} * \frac{\partial \mathcal{C}}{\partial a^{(L)}}\)</span></li>
+<li>For each <span class="math inline">\(l\)</span> from <span class="math inline">\((L - 1)\)</span> down to 1:
+<ul>
+<li><span class="math inline">\(\delta^{(l)} = D^{(l)} * \left(W^{(l + 1)}\right)^T * \delta^{(l + 1)}\)</span></li>
+</ul></li>
+<li>For each <span class="math inline">\(l\)</span> from <span class="math inline">\(L\)</span> down to 1:
+<ul>
+<li><span class="math inline">\(W^{(l)} \leftarrow W^{(l)} - \rho * \delta^{(l)} * \left(a^{(l - 1)}\right)^T\)</span></li>
+<li><span class="math inline">\(b^{(l)} \leftarrow W^{(l)} - \rho * \delta^{(l)}\)</span></li>
+</ul></li>
+</ol>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="digit-model.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="multi-layer-nn-model.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/04_Multi_Layer_NN_notes.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

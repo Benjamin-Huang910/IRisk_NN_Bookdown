@@ -1,0 +1,36 @@
+---
+title: "Neural Nets from Scratch"
+author: "Daniel Polites"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+url: "https://bookdown.org/redmondjohnson3/neural_net_scratch/"
+description: "iRisk Labs SP-2024 Project"
+---
+
+# Intro
+
+This is a write-up of iRisk's Spring 2024 project: Neural Nets from Scratch
+
+------------------------------------------------------------------------
+
+The organization is:
+
+2.  Single-Layer NN Notes
+    -   intro notation & methodology for single-hidden layer neural network
+3.  Digit Model
+    -   GLMs on MNIST handwritten digits as an application intro
+4.  Multi-Layer NN Notes
+    -   intro notation & methodology for multi-hidden layer neural network
+5.  Multi-Layer NN Model
+    -   implementation of multi-layer neural network in R
+    
+### Setup
+
+```{r}
+knitr::opts_chunk$set(echo = TRUE)
+set.seed(50)
+library(tidyverse)
+library(keras)
+library(glmnet)
+```
