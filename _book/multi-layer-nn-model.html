@@ -23,7 +23,7 @@
 <meta name="author" content="Daniel Polites" />
 
 
-<meta name="date" content="2024-04-17" />
+<meta name="date" content="2024-04-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -802,63 +802,63 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb24-23"><a href="multi-layer-nn-model.html#cb24-23" tabindex="-1"></a>NN_sum <span class="ot">&lt;-</span> <span class="fu">GD_summary</span>(<span class="at">GD_obj =</span> GD_NN)</span></code></pre></div>
 <pre><code>## Gradient Descent Summary:
 ##   |
-##   |  Number of Iterations: 195
+##   |  Number of Iterations: 191
 ##   |
-##   |  Initial Objective: 292351.5
-##   |  Final Objective: 17745.3
-##   |  Ratio: 0.0607
+##   |  Initial Objective: 263416.2
+##   |  Final Objective: 17117.9
+##   |  Ratio: 0.065
 ## 
 ## ----------------------------------------
 ## Initial W:
 ## 
 ## [[1]]
 ##           [,1]      [,2]       [,3]
-## [1,] 0.1405849 0.6126575 0.90775035
-## [2,] 0.2318597 0.7492433 0.37241190
-## [3,] 0.7124109 0.8722413 0.04381782
+## [1,] 0.4182675 0.8921468 0.49738693
+## [2,] 0.7286515 0.6905177 0.02857887
+## [3,] 0.4923099 0.2184576 0.54485904
 ## 
 ## [[2]]
-##           [,1]      [,2]       [,3]
-## [1,] 0.1016381 0.4180429 0.02126928
+##           [,1]      [,2]      [,3]
+## [1,] 0.4103758 0.1371677 0.3502349
 ## 
 ## ----------------------------------------
 ## Final W:
 ## 
 ## [[1]]
-##              X1           X2        X3
-## [1,] 0.06090143  0.008947117 2.4498792
-## [2,] 0.25129656 -0.084129255 1.7029701
-## [3,] 1.07769608  0.301962828 0.5952256
+##             X1          X2        X3
+## [1,] 0.2587752  0.08983633 1.3329531
+## [2,] 0.9177578  0.18485338 0.3675904
+## [3,] 0.2064217 -0.04623663 2.5839747
 ## 
 ## [[2]]
-##          [,1]     [,2]      [,3]
-## [1,] 2.262134 1.681697 0.7141668
+##          [,1]      [,2]     [,3]
+## [1,] 1.061978 0.3738754 2.736289
 ## 
 ## ----------------------------------------
 ## Initial b:
 ## 
 ## [[1]]
 ##           [,1]
-## [1,] 0.3126643
-## [2,] 0.4585076
-## [3,] 0.4846150
+## [1,] 0.7412821
+## [2,] 0.7319258
+## [3,] 0.9590049
 ## 
 ## [[2]]
-##           [,1]
-## [1,] 0.6993605
+##            [,1]
+## [1,] 0.09492421
 ## 
 ## ----------------------------------------
 ## Final b:
 ## 
 ## [[1]]
 ##           [,1]
-## [1,] 0.6466757
-## [2,] 0.8154999
-## [3,] 0.6364554
+## [1,] 0.9374168
+## [2,] 0.8067441
+## [3,] 1.4714041
 ## 
 ## [[2]]
-##          [,1]
-## [1,] 1.367471</code></pre>
+##           [,1]
+## [1,] 0.5693721</code></pre>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="multi-layer-nn-model.html#cb26-1" tabindex="-1"></a><span class="fu">GD_plot</span>(GD_NN)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 <div id="other" class="section level3 hasAnchor" number="5.3.1">

@@ -1,11 +1,12 @@
 ---
 title: "Neural Nets from Scratch"
-author: "Daniel Polites"
+author: "Daniel Polites, Ruibo Hou, Sihao Cheng, Yang-Hsuan Huang"
 date: "`r Sys.Date()`"
-site: bookdown::bookdown_site
+output: pdf_document
 documentclass: book
-url: "https://bookdown.org/redmondjohnson3/neural_net_scratch/"
+url: https://bookdown.org/redmondjohnson3/neural_net_scratch/
 description: "iRisk Labs SP-2024 Project"
+site: bookdown::bookdown_site
 ---
 
 # Intro
